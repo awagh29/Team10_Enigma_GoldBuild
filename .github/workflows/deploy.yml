@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -13,9 +16,16 @@ jobs:
         uses: actions/checkout@v4
         with:
           lfs: true
+          fetch-depth: 0
 
       - name: Pull LFS files
         run: git lfs pull
+
+      # 🔥 CRITICAL STEP
+      - name: Disable LFS so files stay real
+        run: |
+          rm -f .gitattributes
+          git lfs uninstall || true
 
       - name: Prepare build
         run: |
@@ -23,9 +33,11 @@ jobs:
           cp -r Build public/Build
           cp index.html public/
           cp -r TemplateData public/ || true
+          rm -f public/.gitattributes
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
+          force_orphan: true
