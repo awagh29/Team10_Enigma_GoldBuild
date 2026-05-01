@@ -12,5 +12,4 @@ group10-enigma filter=lfs diff=lfs merge=lfs -text
 *.mp4 filter=lfs diff=lfs merge=lfs -text
 *.mov filter=lfs diff=lfs merge=lfs -text
 *.unitypackage filter=lfs diff=lfs merge=lfs -text
-*.data filter=lfs diff=lfs merge=lfs -text
 Build/Secrets.data.unityweb filter=lfs diff=lfs merge=lfs -text
