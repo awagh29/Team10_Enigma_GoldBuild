@@ -21,7 +21,6 @@ jobs:
       - name: Pull LFS files
         run: git lfs pull
 
-      # 🔥 CRITICAL STEP
       - name: Disable LFS so files stay real
         run: |
           rm -f .gitattributes
